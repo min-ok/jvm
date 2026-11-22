@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cmath>
 #include <iostream>
 
 #include "core/errors.h"
+#include "core/opcodes.h"
 #include "core/program.h"
 #include "core/value.h"
 
@@ -58,6 +60,24 @@ class VM {
             break;
         case NEG:
             reg(ins.a) = Value::Int(-reg(ins.b).asInt());
+            break;
+        case FADD:
+            reg(ins.a) = Value::Float(reg(ins.b).asFloat() + reg(ins.c).asFloat());
+            break;
+        case FSUB:
+            reg(ins.a) = Value::Float(reg(ins.b).asFloat() - reg(ins.c).asFloat());
+            break;
+        case FMUL:
+            reg(ins.a) = Value::Float(reg(ins.b).asFloat() * reg(ins.c).asFloat());
+            break;
+        case FDIV:
+            reg(ins.a) = Value::Float(reg(ins.b).asFloat() / reg(ins.c).asFloat());
+            break;
+        case FMOD:
+            reg(ins.a) = Value::Float(std::fmod(reg(ins.b).asFloat(), reg(ins.c).asFloat()));
+            break;
+        case FNEG:
+            reg(ins.a) = Value::Float(-reg(ins.b).asFloat());
             break;
         case LI:
             reg(ins.a) = Value::Int(ins.b);
