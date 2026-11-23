@@ -39,7 +39,14 @@ enum Opcode {
 
     IN,
     FIN,
+
     PR,
+    FPR,
+
+    ALLOC,
+    FREE,
+    LOAD64,
+    STORE64,
 
     OPCODE_COUNT,
 };
