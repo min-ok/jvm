@@ -1,4 +1,4 @@
-#include "core/vm.h"
+#include "vm/vm.h"
 
 int main() {
     std::vector<Instruction> ins;
