@@ -23,8 +23,7 @@ clang-format -i src/*/*.cpp src/*/*.h src/*.cpp
 
 ```
 docs/          isa.md - instruction set, format.md - program file format
-src/core/      values, instructions, program, errors
-src/vm/        virtual machine: registers, execution loop
+src/core/      values, instructions, program, errors, VM
 src/loader/    reads a program file into a Program
 src/main.cpp   entry point
 tests/         test programs
