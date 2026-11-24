@@ -13,6 +13,16 @@ class HeapError : public std::runtime_error {
 };
 
 
+class BlockInfo {
+public:
+    uint64_t real_addr;
+    uint64_t size;
+    uint8_t flag;
+    BlockInfo(uint64_t real_addr, uint64_t size, uint8_t flag = 1)
+        : real_addr(real_addr), size(size), flag(flag) {};
+};
+
+
 class Heap {
 private:
         explicit Heap(uint64_t size) : memory(size, 0) {
@@ -20,7 +30,10 @@ private:
         };
     
         std::vector<uint8_t> memory;
-        std::map<uint64_t, uint64_t> blocks;
+        std::map<uint64_t, BlockInfo> blocks;
+
+        static uint64_t new_addr(uint64_t size);
+        uint64_t compress();
 public:
     static Heap& get_heap(uint64_t size) {
         static Heap heap = Heap(size);
@@ -33,7 +46,7 @@ public:
     Heap& operator=(Heap&&) = delete;
 
     uint64_t alloc(uint64_t size);
-    void dealloc(uint64_t addr);
+    void free(uint64_t addr);
 
     int64_t read64(uint64_t addr) const;
     uint8_t read8(uint64_t addr) const;
