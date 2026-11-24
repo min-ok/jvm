@@ -25,25 +25,20 @@ public:
 
 class Heap {
 private:
-        explicit Heap(uint64_t size) : memory(size, 0) {
-            if(size == 0) throw HeapError("incorrect size");
-        };
-    
         std::vector<uint8_t> memory;
         std::map<uint64_t, BlockInfo> blocks;
+        uint64_t next_addr = 1;
+        uint64_t offset = 0;
 
-        static uint64_t new_addr(uint64_t size);
+        uint64_t new_addr(uint64_t size);
         uint64_t compress();
 public:
-    static Heap& get_heap(uint64_t size) {
-        static Heap heap = Heap(size);
-        return heap;
+    explicit Heap(uint64_t size) : memory(size, 0) {
+            if(size == 0) throw HeapError("incorrect size");
     };
 
     Heap(const Heap&) = delete;
     Heap& operator=(const Heap&) = delete;
-    Heap(Heap&&) = delete;
-    Heap& operator=(Heap&&) = delete;
 
     uint64_t alloc(uint64_t size);
     void free(uint64_t addr);

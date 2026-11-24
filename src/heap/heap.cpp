@@ -4,9 +4,8 @@
 
 
 uint64_t Heap::new_addr(uint64_t size) {
-    static uint64_t addr = 1;
-    uint64_t res = addr;
-    addr += size;
+    uint64_t res = next_addr;
+    next_addr += size;
     return res;
 }
 
@@ -28,8 +27,6 @@ uint64_t Heap::compress() {
 }
 
 uint64_t Heap::alloc(uint64_t size) {
-    static uint64_t offset = 0;
-
     if(size == 0) throw HeapError("size must be > 0");
     if(size + offset > memory.size()) offset = compress();
     if(size + offset > memory.size()) throw HeapError("not enough memory");
